@@ -127,13 +127,29 @@
             http://activemq.apache.org/configuring-transports.html
         -->
         <transportConnectors>
-            <!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
-            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
-            <% if node['activemq']['enable_stomp'] -%>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
-            <% end -%>
-            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?needClientAuth=true&amp;maximumConnections=1000&amp;wireformat.maxFrameSize=104857600" />
+            <% if node['activemq']['enable_openwire'] %>
+            <transportConnector
+              name="openwire"
+              uri="tcp://0.0.0.0:<%= node['activemq']['openwire_port'] %>?maximumConnections=<%= @max_connections %>&amp;wireformat.maxFrameSize=<%= @max_frame_size %>"/>
+            <% end %>
+
+            <% if node['activemq']['enable_amqp'] %>
+            <transportConnector
+              name="amqp"
+              uri="amqp://0.0.0.0:<%= node['activemq']['amqp_port'] %>?maximumConnections=<%= @max_connections %>&amp;wireformat.maxFrameSize=<%= @max_frame_size %>"/>
+            <% end %>
+
+            <% if node['activemq']['enable_stomp'] %>
+            <transportConnector
+              name="stomp"
+              uri="stomp://0.0.0.0:<%= node['activemq']['stomp_port'] %>?maximumConnections=<%= @max_connections %>&amp;wireformat.maxFrameSize=<%= @max_frame_size %>"/>
+            <% end %>
+
+            <% if node['activemq']['enable_ssl'] %>
+            <transportConnector
+              name="ssl"
+              uri="ssl://0.0.0.0:<%= node['activemq']['ssl_port'] %>?needClientAuth=true&amp;maximumConnections=<%= @max_connections %>&amp;wireformat.maxFrameSize=<%= @max_frame_size %>" />
+            <% end %>
         </transportConnectors>
 
         <!-- destroy the spring context on shutdown to stop jetty -->

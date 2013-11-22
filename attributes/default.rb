@@ -27,5 +27,20 @@ default['activemq']['wrapper']['truststore_password'] = 'password'
 default['activemq']['wrapper']['keystore_path'] = '%ACTIVEMQ_CONF%/broker.ks'
 default['activemq']['wrapper']['truststore_path'] = '%ACTIVEMQ_CONF%/broker.ts'
 
+default['activemq']['enable_openwire'] = true
+default['activemq']['openwire_port'] = 61616
+
+default['activemq']['enable_amqp'] = true
+default['activemq']['amqp_port'] = 5672
+
 default['activemq']['enable_stomp'] = true
+default['activemq']['stomp_port'] = 61613
+
+default['activemq']['enable_ssl'] = true
+default['activemq']['ssl_port'] = 61617
+
 default['activemq']['use_default_config'] = false
+
+# DOS protection, limit concurrent connections to 1000 and frame size to 100MB
+default['activemq']['max_connections'] = 1000
+default['activemq']['max_frame_size'] = 104857600

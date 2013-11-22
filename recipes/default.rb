@@ -59,6 +59,8 @@ template "#{activemq_home}/conf/activemq.xml" do
   group    'root'
   notifies :restart, 'service[activemq]'
   only_if  { node['activemq']['use_default_config'] }
+  variables :max_connections => node['activemq']['max_connections'],
+            :max_frame_size => node['activemq']['max_frame_size']
 end
 
 service 'activemq' do
